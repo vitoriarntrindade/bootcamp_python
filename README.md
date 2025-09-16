@@ -85,6 +85,10 @@ A aplicação containerizada está disponível em:
 
 **➡️ [https://bootcamp-python.onrender.com/](https://bootcamp-python.onrender.com/)**
 
+
+<img width="1336" height="695" alt="image" src="https://github.com/user-attachments/assets/c3541cc1-a878-41e2-85cd-a39911f4fd1d" />
+
+
 ---
 
 ## 🎯 Conceitos Docker Aplicados
@@ -205,7 +209,6 @@ Durante esta aula prática sobre **conceitos de Docker**, foram abordados:
 
 <div align="center">
 
-**⭐ Se este projeto te ajudou a entender Docker, deixe uma estrela!**
 
 *Feito com 🐳 Docker durante bootcamp de Python*
 
