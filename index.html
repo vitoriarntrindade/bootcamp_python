@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitória Trindade | Python Developer & Data Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --accent: #ff0040;
+            --accent-hover: #ff3366;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #333;
+            --code-bg: #0d0d0d;
+            --success: #00ff88;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 0, 64, 0.03) 2px,
+                    rgba(255, 0, 64, 0.03) 4px
+                );
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 5px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "</>";
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent), #ff66aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { text-shadow: 2px 2px 0 rgba(255, 0, 64, 0.5); }
+            25% { text-shadow: -2px -2px 0 rgba(0, 255, 136, 0.5); }
+            50% { text-shadow: 2px -2px 0 rgba(255, 102, 170, 0.5); }
+            75% { text-shadow: -2px 2px 0 rgba(255, 0, 64, 0.5); }
+        }
+
+        .hero-text h2 {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .terminal {
+            background: var(--code-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terminal::before {
+            content: "● ● ●";
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            color: var(--accent);
+            letter-spacing: 5px;
+        }
+
+        .terminal-content {
+            margin-top: 1.5rem;
+        }
+
+        .typing {
+            color: var(--success);
+            position: relative;
+        }
+
+        .typing::after {
+            content: "_";
+            animation: cursor 1s infinite;
+        }
+
+        @keyframes cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 64, 0.3);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 4rem 2rem;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::before {
+            content: "< ";
+            color: var(--accent);
+        }
+
+        .section-title::after {
+            content: " />";
+            color: var(--accent);
+        }
+
+        .skills-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--code-bg);
+            border: 2px solid var(--border-color);
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 64, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .skill-card:hover::before {
+            left: 100%;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .skill-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .skill-list li::before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--accent);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -2.5rem;
+            top: 2rem;
+            width: 15px;
+            height: 15px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .timeline-item:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+        }
+
+        .timeline-item h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item .date {
+            color: var(--success);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+
+        .timeline-item ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-item ul li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 2rem;
+            background: var(--bg-secondary);
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 1rem;
+            border: 2px solid transparent;
+        }
+
+        .contact-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid var(--accent);
+            color: var(--text-secondary);
+        }
+
+        /* ASCII Art */
+        .ascii-art {
+            font-size: 0.8rem;
+            line-height: 1;
+            color: var(--accent);
+            opacity: 0.3;
+            white-space: pre;
+            margin: 2rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">VT</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experiência</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Vitória Trindade</h1>
+                <h2>Python Developer | Data Engineer</h2>
+                <p>
+                    Backend developer em transição para Engenharia de Dados. 
+                    Transformo café e rock'n'roll em pipelines de dados eficientes, 
+                    APIs robustas e soluções escaláveis em cloud.
+                </p>
+                <div class="cta-buttons">
+                    <a href="https://linkedin.com/in/vitoriarntrindade" class="btn btn-primary" target="_blank">
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/vitoriarntrindade" class="btn" target="_blank">
+                        <span>GitHub</span>
+                    </a>
+                    <a href="mailto:vitoriarntrindade@gmail.com" class="btn">
+                        <span>Email</span>
+                    </a>
+                </div>
+            </div>
+            <div class="terminal">
+                <div class="terminal-content">
+                    <div class="typing">
+$ python manage.py runserver
+Starting development server...
+</div>
+                    <br>
+                    <div style="color: #ff0040;">>>> import pandas as pd</div>
+                    <div style="color: #ff0040;">>>> from life import coffee, code, rock</div>
+                    <br>
+                    <div style="color: #00ff88;">>>> def build_awesome_stuff():</div>
+                    <div style="color: #00ff88;">...     while coffee:</div>
+                    <div style="color: #00ff88;">...         code += creativity</div>
+                    <div style="color: #00ff88;">...         deploy_to_cloud()</div>
+                    <br>
+                    <div style="color: #b0b0b0;"># Building data pipelines... ⚡</div>
+                    <div style="color: #b0b0b0;"># Automating everything... 🤖</div>
+                    <div style="color: #b0b0b0;"># Rock on! 🤘</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="skills" id="skills">
+        <h2 class="section-title">Tech Stack</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>// Backend & Automação</h3>
+                <ul class="skill-list">
+                    <li>Python (FastAPI, Flask)</li>
+                    <li>APIs RESTful & JWT</li>
+                    <li>Playwright & Selenium</li>
+                    <li>Web Scraping & RPA</li>
+                    <li>Clean Code & TDD</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>// Data Engineering</h3>
+                <ul class="skill-list">
+                    <li>ETL & Pipelines</li>
+                    <li>Pandas & NumPy</li>
+                    <li>SQL (Oracle, PostgreSQL)</li>
+                    <li>Data Lakes & Warehouses</li>
+                    <li>Integração de Sistemas</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>// Cloud & DevOps</h3>
+                <ul class="skill-list">
+                    <li>Azure (Functions, Blob, App Service)</li>
+                    <li>AWS (S3, RDS, Glue, Athena)</li>
+                    <li>Docker & Containers</li>
+                    <li>CI/CD Pipelines</li>
+                    <li>Git & Versionamento</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>// Metodologias</h3>
+                <ul class="skill-list">
+                    <li>Scrum & Kanban</li>
+                    <li>Documentação Técnica</li>
+                    <li>Code Review</li>
+                    <li>Pair Programming</li>
+                    <li>Problem Solving</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience" id="experience">
+        <h2 class="section-title">Experiência</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Python Developer (RPA & Data Automation)</h3>
+                <div class="date">KLG Consultoria | Fev 2025 - Atual</div>
+                <ul>
+                    <li>Desenvolvimento de pipelines ETL para processamento de grandes volumes</li>
+                    <li>Criação de robôs de scraping com Playwright/Selenium</li>
+                    <li>Integração de APIs RESTful com FastAPI e JWT</li>
+                    <li>Deploy em Azure (Blob Storage, Functions, App Service)</li>
+                    <li>Implementação de Clean Code e TDD com Pytest</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3>Estagiária em Desenvolvimento</h3>
+                <div class="date">NeoSolar Energia | Ago 2024 - Atual</div>
+                <ul>
+                    <li>Saneamento e padronização de dados no ERP Sankhya</li>
+                    <li>Automação de processos com Python e SQL Oracle</li>
+                    <li>Integração entre ERP e APIs externas</li>
+                    <li>Criação de dashboards para indicadores de negócio</li>
+                    <li>Participação em squads ágeis (Scrum/Kanban)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2 class="section-title">Let's Rock Together</h2>
+        <div class="contact-content">
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                Procurando uma dev que transforma dados em insights e café em código? 
+                Vamos construir algo incrível juntos! 🚀
+            </p>
+            <div class="ascii-art">
+     ___________
+    |  __ ___  |
+    | |  X   X | 
+    | |    >   |
+    | |   ___  |
+    |  \_____/ |
+    |___________|
+            </div>
+            <div class="contact-links">
+                <a href="mailto:vitoriarntrindade@gmail.com" class="contact-link">
+                    <span>📧</span>
+                    <span>vitoriarntrindade@gmail.com</span>
+                </a>
+                <a href="tel:+5592986234731" class="contact-link">
+                    <span>📱</span>
+                    <span>(92) 98623-4731</span>
+                </a>
+                <a href="https://linkedin.com/in/vitoriarntrindade" class="contact-link" target="_blank">
+                    <span>💼</span>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/vitoriarntrindade" class="contact-link" target="_blank">
+                    <span>🐙</span>
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Vitória Trindade | Built with ☕ and 🤘 | Keep Coding, Keep Rocking!</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Terminal typing effect
+        const terminalText = "$ Building amazing data solutions...";
+        let index = 0;
+        const typingElement = document.querySelector('.typing');
+        
+        function typeWriter() {
+            if (index < terminalText.length) {
+                typingElement.textContent = terminalText.substring(0, index + 1);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        // Start typing effect when page loads
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Add glitch effect on hover
+        const logo = document.querySelector('.logo');
+        logo.addEventListener('mouseenter', () => {
+            logo.style.animation = 'glitch 0.5s infinite';
+        });
+        logo.addEventListener('mouseleave', () => {
+            logo.style.animation = 'none';
+        });
+    </script>
+</body>
+</html>
